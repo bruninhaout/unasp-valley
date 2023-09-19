@@ -5,6 +5,7 @@ class Game:
     def __init__(self):
         pygame.init()
         self.tela = pygame.display.set_mode((LARGURA_TELA, ALTURA_TELA))
+        pygame.display.set_caption("Unasp-Vallew")
         self.clock = pygame.time.Clock()
 
     def run(self):
