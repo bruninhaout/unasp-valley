@@ -33,8 +33,20 @@ class Player(pygame.sprite.Sprite):
             self.direcao.x = 0
 
     def movimento(self, dt):
-        self.pos += self.direcao * self.speed * dt
-        self.rect.center = self.pos
+
+        #normalizando movimento do vetor (manter a direção/velocidade em 1 na diagonal
+        if self.direcao.magnitude() > 0: 
+            self.direcao = self.direcao.normalize()
+        print(self.direcao)
+
+        #movimento horizontal (importante para colisão)
+        self.pos.x += self.direcao.x * self.speed * dt
+        self.rect.centerx = self.pos.x
+
+        #movimento vertical (importante para colisão)
+        self.pos.y += self.direcao.y * self.speed * dt
+        self.rect.centery = self.pos.y
+       
 
     def update(self, dt):
         self.input()

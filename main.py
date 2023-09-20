@@ -9,6 +9,7 @@ class Game:
         self.tela = pygame.display.set_mode((LARGURA_TELA, ALTURA_TELA))
         pygame.display.set_caption("Unasp-Vallew")
         self.clock = pygame.time.Clock()
+        #self.menu = Menu()
         self.level = Level()
 
     def run(self):
@@ -18,7 +19,7 @@ class Game:
                     pygame.quit()
                     sys.exit()
             
-            dt = self.clock.tick() / 1000
+            dt = self.clock.tick() / 1000 #delta time
             self.level.run(dt)
             pygame.display.update()
 
