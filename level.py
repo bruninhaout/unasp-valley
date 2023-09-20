@@ -1,5 +1,6 @@
 import pygame
 from settings import *
+from player import Player
 
 class Level:
 
@@ -11,7 +12,12 @@ class Level:
         #sprite groups
         self.all_sprites = pygame.sprite.Group()
 
-    def run (self, dt):
+        self.setup()
+
+    def setup(self):
+        self.player = Player((640, 360), self.all_sprites) #posição e grupo do player
+
+    def run(self, dt): #superficie que irá sempre atualizar
         self.display_surface.fill('black')
-        self.all_sprites.draw(self.display_surface)
-        self.all_sprites.update
+        self.all_sprites.draw(self.display_surface) #função draw dos sprites groups
+        self.all_sprites.update(dt) #update method
