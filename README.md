@@ -1,5 +1,5 @@
 # unasp-valley
-Jogo estilo stardew valley utilizando a biblioteca de python pygame para a matéria de Computação Gráfica
+Jogo estilo stardew valley utilizando a biblioteca pygame para a matéria de Computação Gráfica
 
 <p align="center">
 <img src="http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=GREEN&style=for-the-badge"/>
