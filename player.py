@@ -59,7 +59,7 @@ class Player(pygame.sprite.Sprite):
             self.direcao.x = 0
 
     def get_status(self): #verificar se esta parado
-        #se o player esta se movendo add _idle
+        #se o player esta se movendo add _idle 
         if self.direcao.magnitude() == 0:
             self.status = self.status.split('_')[0] + '_idle'
             
