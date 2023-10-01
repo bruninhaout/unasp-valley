@@ -4,9 +4,9 @@ class Button:
     def __init__(self, text, pos):
         self.text = text
         self.pos = pos
-        self.font = pygame.font.Font(None, 36)
-        self.width = 200
-        self.height = 50
+        self.font = pygame.font.Font(None, 40)
+        self.width = 350
+        self.height = 100
         self.rect = pygame.Rect(pos[0], pos[1], self.width, self.height)
         self.color = (0, 128, 255)
         self.hover_color = (0, 200, 255)
