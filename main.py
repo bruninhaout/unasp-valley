@@ -7,14 +7,13 @@ class Game:
     def __init__(self):
         pygame.init()
         self.tela = pygame.display.set_mode((LARGURA_TELA, ALTURA_TELA))
-        pygame.display.set_caption("Unasp-Vallew")
         self.clock = pygame.time.Clock()
         self.menu = Menu()
         self.level = Level()
         self.current_screen = "menu"
 
     def run(self):
-        current_screen = "menu" 
+        current_screen = "menu"
         
         while True:
             for event in pygame.event.get():
@@ -41,4 +40,5 @@ class Game:
 if __name__ == '__main__':
     jogo = Game()
     jogo.run()
+
 

@@ -4,15 +4,23 @@ from level import *
 from settings import *
 from button import *
 
+pygame.init()
+pygame.mixer.init()
+
+pygame.mixer.music.load('graficos/menu/Nintendo Wii - Shop Channel Music (Extended) HQ.mp3')
+
+back = pygame.image.load('graficos/menu/i295429.jpeg')
+image = pygame.transform.scale(back, (LARGURA_TELA, ALTURA_TELA))
 
 class Menu:
+    pygame.mixer.music.play(loops=99, start=0.0)
     def __init__(self):
         # Defina os elementos do menu, como botões e texto.
         self.start_button = Button("COMEÇAR!", (LARGURA_TELA // 2.7, 250))
         self.exit_button = Button("SAIR", (LARGURA_TELA // 2.7, 400))
 
     def draw(self, screen):
-        screen.fill((255, 255, 255))  # Preencha a tela com uma cor de fundo
+        screen.blit(image, (0, 0))  # Preencha a tela com uma cor de fundo
         self.start_button.draw(screen)
         self.exit_button.draw(screen)
         pygame.display.update()
