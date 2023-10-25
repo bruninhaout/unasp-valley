@@ -14,6 +14,7 @@ class Player(pygame.sprite.Sprite):
         #setup geral do player
         self.image = self.animations[self.status][self.frame_index] #criar o personagem com imagem
         self.rect = self.image.get_rect(center = pos) #posição (int)
+        self.z = LAYERS['main']
 
         #atribuir movimentos
         self.direcao = pygame.math.Vector2()

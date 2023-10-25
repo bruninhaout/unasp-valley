@@ -16,12 +16,12 @@ class Level:
         self.setup()
 
     def setup(self):
+        self.player = Player((640, 360), self.all_sprites) #posição e grupo do player
         Generic(
             pos = (0,0),
             surf = pygame.image.load('./graficos/world/ground.png').convert_alpha(),
             groups = self.all_sprites
         )
-        self.player = Player((640, 360), self.all_sprites) #posição e grupo do player
 
     def run(self, dt): #superficie que irá sempre atualizar
         self.display_surface.fill('black')
