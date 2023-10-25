@@ -4,32 +4,37 @@ from player import Player
 from sprites import Generic
 from overlay import Overlay
 
+
 class Level:
 
-    def __init__(self) -> None:
-        
-        #pegar a tela de superficie
+    def __init__(self):
+
+        # pegar a tela de superficie
         self.display_surface = pygame.display.get_surface()
 
-        #sprite groups
+        # sprite groups
         self.all_sprites = CameraGroup()
 
         self.setup()
         self.overlay = Overlay(self.player)
 
     def setup(self):
-        self.player = Player((640, 360), self.all_sprites) #posição e grupo do player
+        # posição e grupo do player
+        self.player = Player((640, 360), self.all_sprites)
         Generic(
-            pos = (0,0),
-            surf = pygame.image.load('./graficos/world/ground.png').convert_alpha(),
-            groups = self.all_sprites,
-            z = LAYERS['ground']
+            pos=(0, 0),
+            surf=pygame.image.load(
+                './graficos/world/ground.png').convert_alpha(),
+            groups=self.all_sprites,
+            z=LAYERS['ground']
         )
 
-    def run(self, dt): #superficie que irá sempre atualizar
+    def run(self, dt):  # superficie que irá sempre atualizar
         self.display_surface.fill('black')
-        self.all_sprites.custom_draw()
-        self.all_sprites.update(dt) #update method
+        self.all_sprites.custom_draw(self.player)
+        self.all_sprites.update(dt)  # update method
+        self.overlay.display()
+
 
 class CameraGroup(pygame.sprite.Group):
     def __init__(self):
@@ -38,8 +43,8 @@ class CameraGroup(pygame.sprite.Group):
         self.offset = pygame.math.Vector2()
 
     def custom_draw(self, player):
-        self.offset.x = player.rect.centerx - SCREEN_WIDTH / 2
-        self.offset.y = player.rect.centery - SCREEN_HEIGHT  / 2
+        self.offset.x = player.rect.centerx - LARGURA_TELA / 2
+        self.offset.y = player.rect.centery - ALTURA_TELA / 2
         for layer in LAYERS.values():
             for sprite in self.sprites():
                 if sprite.z == layer:
