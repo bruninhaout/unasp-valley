@@ -3,56 +3,67 @@ from settings import *
 from suporte import *
 from timer import Timer
 
+
 class Player(pygame.sprite.Sprite):
     def __init__(self, pos, group):
         super().__init__(group)
 
         self.import_assets()
-        self.status = 'down_idle' 
+        self.status = 'down_idle'
         self.frame_index = 0
-        
-        #setup geral do player
-        self.image = self.animations[self.status][self.frame_index] #criar o personagem com imagem
-        self.rect = self.image.get_rect(center = pos) #posição (int)
 
-        #atribuir movimentos
+        # setup geral do player
+        # criar o personagem com imagem
+        self.image = self.animations[self.status][self.frame_index]
+        self.rect = self.image.get_rect(center=pos)  # posição (int)
+
+        # atribuir movimentos
         self.direcao = pygame.math.Vector2()
         self.pos = pygame.math.Vector2(self.rect.center)
         self.speed = 200
-        
-        #timers
+
+        # timers
         self.timers = {
-            'tool use': Timer(350, self.use_tool)
+            'tool use': Timer(350, self.use_tool),
+            'tool switch': Timer(200)
         }
-        
-        #tools
-        self.ferramenta_selecionada = 'axe'
+
+        # tools
+        self.tools = ['hoe', 'axe', 'water']
+        self.tools_index = 0
+        self.ferramenta_selecionada = self.tools[self.tools_index]
+
+        # seeds
+        self.seeds = ['corn', 'tomato']
+        self.seed_index = 0
+
     def use_tool(self):
         print(self.ferramenta_selecionada)
-        
+
     def import_assets(self):
-        self.animations = {'up': [],'down': [],'left': [],'right': [],
-						   'right_idle':[],'left_idle':[],'up_idle':[],'down_idle':[],
-						   'right_hoe':[],'left_hoe':[],'up_hoe':[],'down_hoe':[],
-						   'right_axe':[],'left_axe':[],'up_axe':[],'down_axe':[],
-						   'right_water':[],'left_water':[],'up_water':[],'down_water':[]}
+        self.animations = {'up': [], 'down': [], 'left': [], 'right': [],
+                           'right_idle': [], 'left_idle': [], 'up_idle': [], 'down_idle': [],
+                           'right_hoe': [], 'left_hoe': [], 'up_hoe': [], 'down_hoe': [],
+                           'right_axe': [], 'left_axe': [], 'up_axe': [], 'down_axe': [],
+                           'right_water': [], 'left_water': [], 'up_water': [], 'down_water': []}
 
         for animation in self.animations.keys():
             full_path = 'graficos/character/' + animation
             self.animations[animation] = import_folder(full_path)
         print(self.animations)
 
-    def animate (self, dt):
-        self.frame_index += 4 * dt #pick the number of imagens (0, 1, 2, 3..) de acordo com o que esta na pasta
+    def animate(self, dt):
+        # pick the number of imagens (0, 1, 2, 3..) de acordo com o que esta na pasta
+        self.frame_index += 4 * dt
         if self.frame_index >= len(self.animations[self.status]):
             self.frame_index = 0
-        self.image = self.animations [self.status][int(self.frame_index)]
-        
-    def input(self): #função para controlar o player
+        self.image = self.animations[self.status][int(self.frame_index)]
+
+    def input(self):  # função para controlar o player
         teclas = pygame.key.get_pressed()
-        
+
         if not self.timers['tool use'].active:
-            #direções
+            # direções
             if teclas[pygame.K_UP]:
                 self.direcao.y = -1
                 self.status = 'up'
@@ -70,38 +81,46 @@ class Player(pygame.sprite.Sprite):
                 self.status = 'left'
             else:
                 self.direcao.x = 0
-                
-            #uso ferramenta
+
+            # uso ferramenta
             if teclas[pygame.K_SPACE]:
-                #time para o uso da ferramenta
+                # time para o uso da ferramenta
                 self.timers['tool use'].ativado()
                 self.direcao = pygame.math.Vector2()
-            
 
-    def get_status(self): #verificar se esta parado
-        #se o player esta se movendo add _idle 
+            # troca de ferramenta
+            if teclas[pygame.K_f] and not self.timers['tool switch'].active:
+                self.timers['tool switch'].ativado()
+                self.tools_index += 1
+                # se tool index > quantidade de ferramentas o index volta pra 0
+                self.tools_index = self.tools_index if self.tools_index < len(self.tools) else 0
+
+                self.ferramenta_selecionada = self.tools[self.tools_index]
+
+    def get_status(self):  # verificar se esta parado
+        # se o player esta se movendo add _idle
         if self.direcao.magnitude() == 0:
             self.status = self.status.split('_')[0] + '_idle'
-            
-        #uso da ferramenta
+
+        # uso da ferramenta
         if self.timers['tool use'].active:
             self.status = self.status.split('_')[0] + '_' + self.ferramenta_selecionada
-    
+
     def update_timers(self):
         for timer in self.timers.values():
             timer.update()
-    
+
     def movimento(self, dt):
 
-        #normalizando movimento do vetor (manter a direção/velocidade em 1 na diagonal
-        if self.direcao.magnitude() > 0: 
+        # normalizando movimento do vetor (manter a direção/velocidade em 1 na diagonal
+        if self.direcao.magnitude() > 0:
             self.direcao = self.direcao.normalize()
 
-        #movimento horizontal (importante para colisão)
+        # movimento horizontal (importante para colisão)
         self.pos.x += self.direcao.x * self.speed * dt
         self.rect.centerx = self.pos.x
 
-        #movimento vertical (importante para colisão)
+        # movimento vertical (importante para colisão)
         self.pos.y += self.direcao.y * self.speed * dt
         self.rect.centery = self.pos.y
 
