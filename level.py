@@ -2,6 +2,7 @@ import pygame
 from settings import *
 from player import Player
 from sprites import Generic
+from overlay import Overlay
 
 class Level:
 
@@ -14,6 +15,7 @@ class Level:
         self.all_sprites = CameraGroup()
 
         self.setup()
+        self.overlay = Overlay(self.player)
 
     def setup(self):
         self.player = Player((640, 360), self.all_sprites) #posição e grupo do player
