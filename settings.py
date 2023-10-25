@@ -6,7 +6,10 @@ ALTURA_TELA = 720
 TILE_SIZE = 64
 
 #POSICOES 
-# overlay positions 
+OVERLAY_POSICOES = {
+	'tool' : (40, ALTURA_TELA - 15),
+	'seed' : (70, ALTURA_TELA - 5)
+}
 
 PLAYER_TOOL_OFFSET = {
 	'left': Vector2(-50,40),
