@@ -1,6 +1,8 @@
 import pygame
 from settings import *
 from player import Player
+from sprites import Generic
+from overlay import Overlay
 
 class Level:
 
@@ -10,14 +12,39 @@ class Level:
         self.display_surface = pygame.display.get_surface()
 
         #sprite groups
-        self.all_sprites = pygame.sprite.Group()
+        self.all_sprites = CameraGroup()
 
         self.setup()
+        self.overlay = Overlay(self.player)
 
     def setup(self):
         self.player = Player((640, 360), self.all_sprites) #posição e grupo do player
+        Generic(
+            pos = (0,0),
+            surf = pygame.image.load('./graficos/world/ground.png').convert_alpha(),
+            groups = self.all_sprites,
+            z = LAYERS['ground']
+        )
 
     def run(self, dt): #superficie que irá sempre atualizar
         self.display_surface.fill('black')
-        self.all_sprites.draw(self.display_surface) #função draw dos sprites groups
+        self.all_sprites.custom_draw(self.player)
         self.all_sprites.update(dt) #update method
+        self.overlay.display()
+
+class CameraGroup(pygame.sprite.Group):
+    def __init__(self):
+        super().__init__()
+        self.display_surface = pygame.display.get_surface()
+        self.offset = pygame.math.Vector2()
+
+    def custom_draw(self, player):
+        self.offset.x = player.rect.centerx - LARGURA_TELA / 2
+        self.offset.y = player.rect.centery - ALTURA_TELA  / 2
+        for layer in LAYERS.values():
+            for sprite in self.sprites():
+                if sprite.z == layer:
+                    offset_rect = sprite.rect.copy()
+                    offset_rect.center -= self.offset
+                    self.display_surface.blit(sprite.image, offset_rect)
+        

@@ -11,6 +11,11 @@ class Player(pygame.sprite.Sprite):
         self.import_assets()
         self.status = 'down_idle'
         self.frame_index = 0
+        
+        #setup geral do player
+        self.image = self.animations[self.status][self.frame_index] #criar o personagem com imagem
+        self.rect = self.image.get_rect(center = pos) #posição (int)
+        self.z = LAYERS['main']
 
         # setup geral do player
         # criar o personagem com imagem
