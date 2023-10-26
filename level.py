@@ -28,8 +28,9 @@ class Level:
 
     def run(self, dt): #superficie que irá sempre atualizar
         self.display_surface.fill('black')
-        self.all_sprites.custom_draw()
+        self.all_sprites.custom_draw(self.player)
         self.all_sprites.update(dt) #update method
+        self.overlay.display()
 
 class CameraGroup(pygame.sprite.Group):
     def __init__(self):
@@ -38,11 +39,12 @@ class CameraGroup(pygame.sprite.Group):
         self.offset = pygame.math.Vector2()
 
     def custom_draw(self, player):
-        self.offset.x = player.rect.centerx - SCREEN_WIDTH / 2
-        self.offset.y = player.rect.centery - SCREEN_HEIGHT  / 2
+        self.offset.x = player.rect.centerx - LARGURA_TELA / 2
+        self.offset.y = player.rect.centery - ALTURA_TELA  / 2
         for layer in LAYERS.values():
             for sprite in self.sprites():
                 if sprite.z == layer:
                     offset_rect = sprite.rect.copy()
                     offset_rect.center -= self.offset
                     self.display_surface.blit(sprite.image, offset_rect)
+        
