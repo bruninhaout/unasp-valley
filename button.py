@@ -27,12 +27,17 @@ class Button:
     def draw(self, screen):
 
         if self.rect.collidepoint(pygame.mouse.get_pos()):
-            pygame.draw.rect(screen, self.hover_color, self.rect2)
+            #pygame.draw.rect(screen, self.hover_color, self.rect2)
             efeito_sonoro.play()
+            self.rect = self.original_rect.copy()  # Restaure o retângulo original
+            self.rect.inflate_ip(15, 15)  # Aumentar o retângulo uniformemente
+            pygame.draw.rect(screen, self.hover_color, self.rect)
             hovered = True
 
         else:
+            self.rect = self.original_rect.copy()  # Restaure o retângulo original
             pygame.draw.rect(screen, self.color, self.rect)
+            efeito_sonoro.stop()
             hovered = False
 
         text_surface = self.font.render(self.text, True, self.text_color)
