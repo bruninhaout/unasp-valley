@@ -125,8 +125,8 @@ class Player(pygame.sprite.Sprite):
                 self.seed_index += 1
                 # se tool index > quantidade de ferramentas o index volta pra 0
                 self.seed_index = self.seed_index if self.seed_index < len(self.seeds) else 0
-                self.selected_seed = self.seeds[self.seed_index]
-                print(self.selected_seed)
+                self.sementes_selecionadas = self.seeds[self.seed_index]
+                print(self.sementes_selecionadas)
 
     def get_status(self):  # verificar se esta parado
         # se o player esta se movendo add _idle

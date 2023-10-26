@@ -7,8 +7,8 @@ TILE_SIZE = 64
 
 #POSICOES 
 OVERLAY_POSICOES = {
-	'tool' : (40, ALTURA_TELA - 15),
-	'seed' : (70, ALTURA_TELA - 5)
+	'tool' : (80, ALTURA_TELA - 40),
+	'seed' : (140, ALTURA_TELA - 20)
 }
 
 PLAYER_TOOL_OFFSET = {
