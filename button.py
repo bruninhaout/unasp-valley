@@ -37,7 +37,6 @@ class Button:
         else:
             self.rect = self.original_rect.copy()  # Restaure o retângulo original
             pygame.draw.rect(screen, self.color, self.rect)
-            efeito_sonoro.stop()
             hovered = False
 
         text_surface = self.font.render(self.text, True, self.text_color)
