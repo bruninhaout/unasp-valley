@@ -36,6 +36,7 @@ class Game:
                 #    dt = self.clock.tick() / 1000 #delta time
                 #    self.level.run(dt)
                 #    pygame.display.update()
+                #akshdajisdgasjkdgaspkjdgaspkjdgasipdkja
 
 if __name__ == '__main__':
     jogo = Game()
