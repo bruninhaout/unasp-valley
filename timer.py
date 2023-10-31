@@ -21,3 +21,5 @@ class Timer:
             self.desativado()
             if self.func:
                 self.func()
+
+    # Teste
