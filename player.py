@@ -46,6 +46,14 @@ class Player(pygame.sprite.Sprite):
         self.seed_index = 0
         self.sementes_selecionadas = self.seeds[self.seed_index]
 
+        # inventário
+        self.item_inventory = {
+            'wood':   0,
+            'apple':  0,
+            'corn':   0,
+            'tomato': 0
+        }
+
     def use_tool(self):
         pass
         #print(self.ferramenta_selecionada)

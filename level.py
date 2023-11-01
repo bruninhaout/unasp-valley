@@ -56,6 +56,11 @@ class Level:
             z = LAYERS['ground']
         )
 
+def player_add(self, item):
+
+    self.player.item_invertory[item] += 1
+
+
     def run(self, dt): #superficie que irá sempre atualizar
         self.display_surface.fill('black')
         self.all_sprites.custom_draw(self.player)
