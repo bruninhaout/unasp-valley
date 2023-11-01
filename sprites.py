@@ -8,7 +8,14 @@ class Generic(pygame.sprite.Sprite):
         self.image = surf
         self.rect = self.image.get_rect(topleft = pos)
         self.z = z
-        
+
+class Interaction(Generic):
+	def __init__(self, pos, size, groups, name):
+		surf = pygame.Surface(size)
+		super().__init(pos, surf, groups)
+		self.name = name
+		
+
 class Water(Generic):
 	def __init__(self, pos, frames, groups):
 

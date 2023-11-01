@@ -1,7 +1,7 @@
 import pygame
 from settings import *
 from player import Player
-from sprites import Generic, Water, WildFlower, Tree
+from sprites import Generic, Water, WildFlower, Tree, Interaction
 from overlay import Overlay
 from pytmx.util_pygame import load_pygame
 from suporte import *
@@ -47,7 +47,7 @@ class Level:
 		# wildflowers 
         for obj in tmx_data.get_layer_by_name('Decoration'):
             WildFlower((obj.x, obj.y), obj.image, self.all_sprites)
-        
+
         self.player = Player((640, 360), self.all_sprites) #posição e grupo do player
         Generic(
             pos = (0,0),
@@ -69,8 +69,8 @@ class CameraGroup(pygame.sprite.Group):
         self.offset = pygame.math.Vector2()
 
     def custom_draw(self, player):
-        self.offset.x = player.rect.centerx - LARGURA_TELA / 2
-        self.offset.y = player.rect.centery - ALTURA_TELA  / 2
+        self.offset.x = player.rect.centerx - SCREEN_WIDTH / 2
+        self.offset.y = player.rect.centery - SCREEN_HEIGHT  / 2
         
         for layer in LAYERS.values():
             for sprite in sorted(self.sprites(), key = lambda sprite: sprite.rect.centery):
