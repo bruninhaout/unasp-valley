@@ -5,7 +5,7 @@ from timer import Timer
 
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self, pos, group):
+    def __init__(self, pos, group, collision_sprites):
         super().__init__(group)
 
         self.import_assets()
@@ -23,9 +23,13 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(center=pos)  # posição (int)
 
         # atribuir movimentos
-        self.direcao = pygame.math.Vector2()
+        self.direction = pygame.math.Vector2()
         self.pos = pygame.math.Vector2(self.rect.center)
         self.speed = 200
+
+        #collision
+        self.hitbox = self.rect.copy().inflate((-126,-70))
+        self.collision_sprites = collision_sprites
 
         # timers
         self.timers = {
@@ -79,28 +83,28 @@ class Player(pygame.sprite.Sprite):
         if not self.timers['tool use'].active:
             # direções
             if teclas[pygame.K_UP]:
-                self.direcao.y = -1
+                self.direction.y = -1
                 self.status = 'up'
             elif teclas[pygame.K_DOWN]:
-                self.direcao.y = 1
+                self.direction.y = 1
                 self.status = 'down'
             else:
-                self.direcao.y = 0
+                self.direction.y = 0
 
             if teclas[pygame.K_RIGHT]:
-                self.direcao.x = 1
+                self.direction.x = 1
                 self.status = 'right'
             elif teclas[pygame.K_LEFT]:
-                self.direcao.x = -1
+                self.direction.x = -1
                 self.status = 'left'
             else:
-                self.direcao.x = 0
+                self.direction.x = 0
 
             # uso ferramenta
             if teclas[pygame.K_SPACE]:
                 # time para o uso da ferramenta
                 self.timers['tool use'].ativado()
-                self.direcao = pygame.math.Vector2()
+                self.direction = pygame.math.Vector2()
 
             # troca de ferramenta
             if teclas[pygame.K_f] and not self.timers['tool switch'].active:
@@ -116,7 +120,7 @@ class Player(pygame.sprite.Sprite):
             if teclas[pygame.K_LCTRL]:
                 # time para o uso da ferramenta
                 self.timers['seed use'].ativado()
-                self.direcao = pygame.math.Vector2()
+                self.direction = pygame.math.Vector2()
                 print('use seed')
 
             # troca das sementes
@@ -130,7 +134,7 @@ class Player(pygame.sprite.Sprite):
 
     def get_status(self):  # verificar se esta parado
         # se o player esta se movendo add _idle
-        if self.direcao.magnitude() == 0:
+        if self.direction.magnitude() == 0:
             self.status = self.status.split('_')[0] + '_idle'
 
         # uso da ferramenta
@@ -142,19 +146,47 @@ class Player(pygame.sprite.Sprite):
         for timer in self.timers.values():
             timer.update()
 
+    def collision(self, direction):
+        for sprite in self.collision_sprites.sprites():
+            if hasattr(sprite, 'hitbox'):
+                if sprite.hitbox.colliderect(self.hitbox):
+                    if direction == 'horizontal':
+                        if self.direction.x > 0:
+                            self.hitbox.right = sprite.hitbox.left
+                        if self.direction.x < 0:
+                            self.hitbox.left = sprite.hitbox.right
+                        self.rect.centerx = self.hitbox.centerx
+                        self.pos.x = self.hitbox.centerx
+                        
+                    if direction == 'vertical':
+                        if self.direction.y > 0:
+                            self.hitbox.bottom = sprite.hitbox.top
+                        if self.direction.y <0:
+                            self.hitbox.top = sprite.hitbox.bottom
+                        self.rect.centery = self.hitbox.centery
+                        self.pos.y = self.hitbox.centery
+
+
+
     def movimento(self, dt):
 
         # normalizando movimento do vetor (manter a direção/velocidade em 1 na diagonal
-        if self.direcao.magnitude() > 0:
-            self.direcao = self.direcao.normalize()
+        if self.direction.magnitude() > 0:
+            self.direction = self.direction.normalize()
 
         # movimento horizontal (importante para colisão)
-        self.pos.x += self.direcao.x * self.speed * dt
+        self.pos.x += self.direction.x * self.speed * dt
+        self.hitbox.centerx = round(self.pos.x)
         self.rect.centerx = self.pos.x
+        self.rect.centerx = self.hitbox.centerx
+        self.collision('horizontal')
 
         # movimento vertical (importante para colisão)
-        self.pos.y += self.direcao.y * self.speed * dt
+        self.pos.y += self.direction.y * self.speed * dt
+        self.hitbox.centery = round(self.pos.y)
         self.rect.centery = self.pos.y
+        self.rect.centery = self.hitbox.centery
+        self.collision('vertical')
 
     def update(self, dt):
         self.input()
