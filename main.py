@@ -6,7 +6,7 @@ from menu import *
 class Game:
     def __init__(self):
         pygame.init()
-        self.tela = pygame.display.set_mode((LARGURA_TELA, ALTURA_TELA))
+        self.tela = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
         self.clock = pygame.time.Clock()
         self.menu = Menu()
         self.level = Level()

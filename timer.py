@@ -18,8 +18,8 @@ class Timer:
     def update(self):
         current_time = pygame.time.get_ticks()
         if current_time - self.star_time >= self.durantion:
-            self.desativado()
-            if self.func:
+            if self.func and self.star_time != 0:
                 self.func()
+            self.desativado()
 
     # Teste
