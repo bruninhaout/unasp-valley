@@ -54,6 +54,6 @@ class Particle(Generic):
 				self.kill()
 
 class Tree(Generic):
-    def __init__(self, pos, surf, groups, name):
+    def __init__(self, pos, surf, groups, name): # add player_add
         super().__init__(pos, surf, groups)
         

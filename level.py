@@ -42,7 +42,16 @@ class Level:
 
 		# trees
         for obj in tmx_data.get_layer_by_name('Trees'):
+<<<<<<< Player_Inventory
             Tree((obj.x, obj.y), obj.image, self.all_sprites, obj.name)
+=======
+            Tree(
+                pos = (obj.x, obj.y), 
+                surf = obj.image, 
+                groups = [self.all_sprites, self.collision_sprites], 
+                name = obj.name)
+                # player_add = self.player_add) 
+>>>>>>> local
 
 		# wildflowers 
         for obj in tmx_data.get_layer_by_name('Decoration'):
@@ -66,6 +75,7 @@ def player_add(self, item):
         self.all_sprites.custom_draw(self.player)
         self.all_sprites.update(dt) #update method
         self.overlay.display()
+        #print(self.player.item_inventory)
 
 class CameraGroup(pygame.sprite.Group):
     def __init__(self):
