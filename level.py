@@ -69,7 +69,7 @@ class Level:
             groups = self.all_sprites,
             z = LAYERS['ground']
         )
-
+       
     def run(self, dt): #superficie que irá sempre atualizar
         self.display_surface.fill('black')
         self.all_sprites.custom_draw(self.player)

@@ -10,7 +10,7 @@ class Generic(pygame.sprite.Sprite):
         self.image = surf
         self.rect = self.image.get_rect(topleft = pos)
         self.z = z
-        self.hitbox = self.rect.copy().inflate(-self.rect.width*0.2, -self.rect.height*0.75)
+        self.hitbox = self.rect.copy().inflate(-self.rect.width * 0.2, -self.rect.height * 0.75)
 
 class Interaction(Generic):
 	def __init__(self, pos, size, groups, name):
@@ -84,16 +84,16 @@ class Tree(Generic):
         #damaging the tree
         self.health -= 1
         
-        #remove the apple
-        if len(self.apple_sprites()) > 0:
-            random_apple = choice(self.apple_sprites())
+        # remove an apple
+        if len(self.apple_sprites.sprites()) > 0:
+            random_apple = choice(self.apple_sprites.sprites())
             random_apple.kill()
             
     def check_death(self):
         if self.health <= 0:
             self.image = self.stump_surf
-            self.rect = self.image.get.rect(midbottom = self.rect.midbottom)
-            self.hitbox = self.rect.copy().inflate(-10, -self.rect.height * 0.6) 
+            self.rect = self.image.get_rect(midbottom = self.rect.midbottom)
+            self.hitbox = self.rect.copy().inflate(-10,-self.rect.height * 0.6)
             self.alive = False
             
     def update(self, dt):
