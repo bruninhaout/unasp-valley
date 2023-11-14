@@ -1,5 +1,4 @@
 from pygame.math import Vector2
-
 #tela
 SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 720
@@ -8,8 +7,7 @@ TILE_SIZE = 64
 #POSICOES 
 OVERLAY_POSITIONS = {
 	'tool' : (80, SCREEN_HEIGHT - 40),
-	'seed' : (140, SCREEN_HEIGHT - 20)
-}
+	'seed' : (140, SCREEN_HEIGHT - 20)}
 
 PLAYER_TOOL_OFFSET = {
 	'left': Vector2(-50,40),
