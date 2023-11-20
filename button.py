@@ -4,6 +4,7 @@ pygame.init()
 pygame.mixer.init()
 
 efeito_sonoro = pygame.mixer.Sound('graficos/menu/minecraft-hurt_kg1jeLX.mp3')
+efeito_sonoro.set_volume(0.1)
 
 class Button:
     def __init__(self, text, pos):
