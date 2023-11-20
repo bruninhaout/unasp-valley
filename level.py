@@ -2,7 +2,7 @@ import pygame
 from settings import *
 from player import Player
 from overlay import Overlay
-from sprites import Generic, Water, WildFlower, Tree, Interaction
+from sprites import Generic, Water, WildFlower, Tree, Interaction, Particle
 from pytmx.util_pygame import load_pygame
 from suporte import *
 from transition import Transition
@@ -133,17 +133,27 @@ class Level:
         if self.raining:
             self.soil_layer.water_all()
         
-        # apples on the trees
+		# apples on the trees
         for tree in self.tree_sprites.sprites():
             for apple in tree.apple_sprites.sprites():
                 apple.kill()
             tree.create_fruit()
 
+    def plant_collision(self):
+        if self.soil_layer.plant_sprites:
+            for plant in self.soil_layer.plant_sprites.sprites():
+                if plant.harvestable and plant.rect.colliderect(self.player.hitbox):
+                    self.player_add(plant.plant_type)
+                    plant.kill()
+                    Particle(plant.rect.topleft, plant.image, self.all_sprites, z = LAYERS['main'])
+                    self.soil_layer.grid[plant.rect.centery // TILE_SIZE][plant.rect.centerx // TILE_SIZE].remove('P')
+
     def run(self, dt):
         # drawing logic
         self.display_surface.fill('black')
         self.all_sprites.custom_draw(self.player)
-
+        self.plant_collision()
+        
         # updates
         if self.shop_active:
             self.menu.update()
@@ -158,9 +168,6 @@ class Level:
         #transition overlay
         if self.player.sleep:
             self.transition.play()
-
-        print(self.shop_active)        
-
 
 class CameraGroup(pygame.sprite.Group):
     def __init__(self):

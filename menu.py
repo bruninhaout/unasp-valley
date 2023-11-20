@@ -45,11 +45,9 @@ class Menu:
 
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if self.start_button.is_clicked(event.pos):
-                    print("Botão 'Start' clicado")
                     return "game"  # Retorne "game" quando o botão "Start" for clicado
 
                 elif self.exit_button.is_clicked(event.pos):
-                    print("Botão 'Sair' clicado")
                     pygame.quit()
                     sys.exit()
         pass
