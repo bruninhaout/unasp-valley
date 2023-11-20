@@ -7,7 +7,7 @@ from pytmx.util_pygame import load_pygame
 from suporte import *
 from transition import Transition
 from soil import SoilLayer
-from sky import Rain
+from sky import Rain, Sky
 from random import randint
 from menugame import Menu
 
@@ -27,6 +27,7 @@ class Level:
         self.setup()
         self.overlay = Overlay(self.player)
         self.transition = Transition(self.reset, self.player)
+        self.sky = Sky()
         
         #sky 
         self.rain = Rain(self.all_sprites,)
@@ -138,6 +139,9 @@ class Level:
             for apple in tree.apple_sprites.sprites():
                 apple.kill()
             tree.create_fruit()
+        
+        # sky
+        self.sky.start_color = [255,255,255]
 
     def plant_collision(self):
         if self.soil_layer.plant_sprites:
@@ -159,6 +163,9 @@ class Level:
             self.menu.update()
         else:
             self.all_sprites.update(dt)
+
+        # daytime
+        self.sky.display(dt)
 
         # weather
         self.overlay.display()

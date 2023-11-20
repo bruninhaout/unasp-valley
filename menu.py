@@ -14,6 +14,8 @@ image = pygame.transform.scale(back, (SCREEN_WIDTH, SCREEN_HEIGHT))
 
 class Menu:
     pygame.mixer.music.play(loops=99, start=0.0)
+    pygame.mixer.music.set_volume(0.25)
+
     def __init__(self):
         # Defina os elementos do menu, como botões e texto.
         self.start_button = Button("COMEÇAR!", (SCREEN_WIDTH // 2.7, 250))

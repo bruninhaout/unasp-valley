@@ -4,6 +4,7 @@ from settings import *
 from level import *
 from menu import *
 
+pygame.display.set_caption('Unasp Valley')
 
 class Game:
     def __init__(self):
