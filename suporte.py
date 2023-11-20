@@ -7,7 +7,6 @@ def import_folder(path):
 
 # get the full path and use to import the imagem as a surface
     for _, __, img_files in walk(path):  # folder name, sub folder, images
-        print(img_files)
         for image in img_files:
             full_path = path + '/' + image
             image_surf = pygame.image.load(full_path).convert_alpha()
