@@ -25,7 +25,6 @@ class Sky:
 
         for index_day, value in enumerate(self.start_reset):
             if self.start_color[index_day] < value and self.flag == 1:
-                print(self.start_color[index_day])
                 self.start_color[index_day] += 2 * dt
 
             if isclose(self.start_color[0], 255, rel_tol=1e-1):

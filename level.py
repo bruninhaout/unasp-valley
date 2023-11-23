@@ -9,7 +9,7 @@ from transition import Transition
 from soil import SoilLayer
 from sky import Rain, Sky
 from random import randint
-from menugame import Menu
+from menugame import Menu as MenuGame
 
 class Level:
     def __init__(self):
@@ -35,7 +35,7 @@ class Level:
         self.soil_layer.raining = self.raining
 
         #shop
-        self.menu = Menu(self.player, self.toggle_shop)
+        self.menu = MenuGame(self.player, self.toggle_shop)
         self.shop_active = False
         
 
@@ -70,8 +70,8 @@ class Level:
                 surf=obj.image,
                 groups=[self.all_sprites,
                         self.collision_sprites, self.tree_sprites],
-                name=obj.name,
-                player_add=self.player_add)
+                        name=obj.name,
+                        player_add=self.player_add)
 
         # wildflowers
         for obj in tmx_data.get_layer_by_name('Decoration'):

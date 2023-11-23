@@ -46,15 +46,15 @@ class Player(pygame.sprite.Sprite):
 
         # inventory
         self.item_inventory = {
-            'wood':   0,
-            'apple':  0,
-            'corn':   0,
-            'tomato': 0
+            'Madeira':   0,
+            'Maça':  0,
+            'Milho':   0,
+            'Tomate': 0
         }
 
         self.seed_inventory = {
-            'corn':   5,
-            'tomato': 5
+            'Semente de Milho':   50000,
+            'Semente de Tomate': 5
         }
 
         self.money = 1000
@@ -161,7 +161,6 @@ class Player(pygame.sprite.Sprite):
                 self.selected_seed = self.seeds[self.seed_index]
 
             if teclas[pygame.K_RETURN]:
-                self.toggle_shop()
                 collided_interaction_sprite = pygame.sprite.spritecollide(
                     self, self.interaction, False)
                 if collided_interaction_sprite:
