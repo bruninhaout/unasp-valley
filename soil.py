@@ -36,7 +36,7 @@ class Plant(pygame.sprite.Sprite):
 
 		# sprite setup
 		self.image = self.frames[self.age]
-		self.y_offset = -16 if plant_type == 'corn' else -8
+		self.y_offset = -16 if plant_type == 'Milho' else -8
 		self.rect = self.image.get_rect(midbottom = soil.rect.midbottom + pygame.math.Vector2(0,self.y_offset))
 		self.z = LAYERS['ground plant']
 
